@@ -7,7 +7,12 @@ import {
   updateSelectedOptions,
 } from "../../features/questionsSlice";
 
-export const QuizCard = () => {
+interface QuizProps {
+  type: "react" | "js";
+}
+
+export const QuizCard = (props: QuizProps) => {
+  const { type } = props;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<IOption>();
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -15,8 +20,8 @@ export const QuizCard = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchQuestions("js"));
-  }, [dispatch]);
+    dispatch(fetchQuestions(type));
+  }, [dispatch, type]);
 
   const { questionsList } = useSelector((state: RootState) => state.questions);
   const selectedOptions = useSelector(
